@@ -1,0 +1,8 @@
+Use deep agents when you need agents that can:
+
+* **Handle complex, multi-step tasks** that require planning and decomposition
+* **Manage large amounts of context** through file system tools
+* **Delegate work** to specialized subagents for context isolation
+* **Persist memory** across conversations and threads
+
+For simpler use cases, consider using LangChain's [`create_agent`](/oss/python/langchain/agents) or building a custom [LangGraph](/oss/python/langgraph/overview) workflow.

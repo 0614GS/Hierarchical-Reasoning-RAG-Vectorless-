@@ -1,0 +1,73 @@
+Execute code in isolated remote environments for safety and flexibility. Remote sandboxes provide the following benefits:
+
+* **Safety**: Protect your local machine from potentially harmful code execution
+* **Clean environments**: Use specific dependencies or OS configurations without local setup
+* **Parallel execution**: Run multiple agents simultaneously in isolated environments
+* **Long-running tasks**: Execute time-intensive operations without blocking your machine
+* **Reproducibility**: Ensure consistent execution environments across teams
+
+To use a remote sandbox, follow these steps:
+
+1. Configure your sandbox provider ([Runloop](https://www.runloop.ai/), [Daytona](https://www.daytona.io/), or [Modal](https://modal.com/)):
+
+   ```bash  theme={null}
+   # Runloop
+   export RUNLOOP_API_KEY="your-key"
+
+   # Daytona
+   export DAYTONA_API_KEY="your-key"
+
+   # Modal
+   modal setup
+   ```
+
+2. Run the CLI with a sandbox:
+
+   ```bash  theme={null}
+   uvx deepagents-cli --sandbox runloop --sandbox-setup ./setup.sh
+   ```
+
+   The agent runs locally but executes all code operations in the remote sandbox. Optional setup scripts can configure environment variables, clone repositories, and prepare dependencies.
+
+3. (Optional) Create a `setup.sh` file to configure your sandbox environment:
+
+   ```bash  theme={null}
+   #!/bin/bash
+   set -e
+
+   # Clone repository using GitHub token
+   git clone https://x-access-token:${GITHUB_TOKEN}@github.com/username/repo.git $HOME/workspace
+   cd $HOME/workspace
+
+   # Make environment variables persistent
+   cat >> ~/.bashrc <<'EOF'
+   export GITHUB_TOKEN="${GITHUB_TOKEN}"
+   export OPENAI_API_KEY="${OPENAI_API_KEY}"
+   cd $HOME/workspace
+   EOF
+
+   source ~/.bashrc
+   ```
+
+   Store secrets in a local `.env` file for the setup script to access.
+
+<Warning>
+  Sandboxes isolate code execution, but agents remain vulnerable to prompt injection with untrusted inputs. Use human-in-the-loop approval, short-lived secrets, and trusted setup scripts only.
+
+  Note that sandbox APIs are evolving rapidly, and we expect more providers to support proxies that help mitigate prompt injection and secrets management concerns.
+</Warning>
+
+***
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+
+<Tip icon="terminal" iconType="regular">
+  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+</Tip>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt

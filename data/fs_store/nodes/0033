@@ -1,0 +1,17 @@
+> Learn how to configure human approval for sensitive tool operations
+
+Some tool operations may be sensitive and require human approval before execution. Deep agents support human-in-the-loop workflows through LangGraph's interrupt capabilities. You can configure which tools require approval using the `interrupt_on` parameter.
+
+```mermaid  theme={null}
+graph LR
+    Agent[Agent] --> Check{Interrupt?}
+    Check --> |no| Execute[Execute]
+    Check --> |yes| Human{Human}
+
+    Human --> |approve| Execute
+    Human --> |edit| Execute
+    Human --> |reject| Cancel[Cancel]
+
+    Execute --> Agent
+    Cancel --> Agent
+```

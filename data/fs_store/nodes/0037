@@ -1,0 +1,30 @@
+When the agent calls multiple tools that require approval, all interrupts are batched together in a single interrupt. You must provide decisions for each one in order.
+
+```python  theme={null}
+config = {"configurable": {"thread_id": str(uuid.uuid4())}}
+
+result = agent.invoke({
+    "messages": [{
+        "role": "user",
+        "content": "Delete temp.txt and send an email to admin@example.com"
+    }]
+}, config=config)
+
+if result.get("__interrupt__"):
+    interrupts = result["__interrupt__"][0].value
+    action_requests = interrupts["action_requests"]
+
+    # Two tools need approval
+    assert len(action_requests) == 2
+
+    # Provide decisions in the same order as action_requests
+    decisions = [
+        {"type": "approve"},  # First tool: delete_file
+        {"type": "reject"}    # Second tool: send_email
+    ]
+
+    result = agent.invoke(
+        Command(resume={"decisions": decisions}),
+        config=config
+    )
+```

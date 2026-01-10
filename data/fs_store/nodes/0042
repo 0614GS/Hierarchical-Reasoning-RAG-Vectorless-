@@ -1,0 +1,10 @@
+When resuming, you must use the same config with the same `thread_id`:
+
+```python  theme={null}
+# First call
+config = {"configurable": {"thread_id": "my-thread"}}
+result = agent.invoke(input, config=config)
+
+# Resume (use same config)
+result = agent.invoke(Command(resume={...}), config=config)
+```

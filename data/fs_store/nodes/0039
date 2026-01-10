@@ -1,0 +1,25 @@
+Each subagent can have its own `interrupt_on` configuration that overrides the main agent's settings:
+
+```python  theme={null}
+agent = create_deep_agent(
+    tools=[delete_file, read_file],
+    interrupt_on={
+        "delete_file": True,
+        "read_file": False,
+    },
+    subagents=[{
+        "name": "file-manager",
+        "description": "Manages file operations",
+        "system_prompt": "You are a file management assistant.",
+        "tools": [delete_file, read_file],
+        "interrupt_on": {
+            # Override: require approval for reads in this subagent
+            "delete_file": True,
+            "read_file": True,  # Different from main agent!
+        }
+    }],
+    checkpointer=checkpointer
+)
+```
+
+When a subagent triggers an interrupt, the handling is the same – check for `__interrupt__` and resume with `Command`.

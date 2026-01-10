@@ -1,0 +1,20 @@
+<AccordionGroup>
+  <Accordion title="Command-line options" icon="flag">
+    | Option                 | Description                                                 |
+    | ---------------------- | ----------------------------------------------------------- |
+    | `--agent NAME`         | Use named agent with separate memory                        |
+    | `--auto-approve`       | Skip tool confirmation prompts (toggle with `Ctrl+T`)       |
+    | `--sandbox TYPE`       | Execute in remote sandbox: `modal`, `daytona`, or `runloop` |
+    | `--sandbox-id ID`      | Reuse existing sandbox                                      |
+    | `--sandbox-setup PATH` | Run setup script in sandbox                                 |
+  </Accordion>
+
+  <Accordion title="CLI commands" icon="terminal">
+    | Command                                         | Description                             |
+    | ----------------------------------------------- | --------------------------------------- |
+    | `deepagents list`                               | List all agents                         |
+    | `deepagents help`                               | Show help                               |
+    | `deepagents reset --agent NAME`                 | Clear agent memory and reset to default |
+    | `deepagents reset --agent NAME --target SOURCE` | Copy memory from another agent          |
+  </Accordion>
+</AccordionGroup>

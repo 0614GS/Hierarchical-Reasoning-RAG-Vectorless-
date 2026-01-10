@@ -1,0 +1,25 @@
+**Problem**: Main agent tries to do work itself instead of delegating.
+
+**Solutions**:
+
+1. **Make descriptions more specific:**
+
+   ```python  theme={null}
+   # ✅ Good
+   {"name": "research-specialist", "description": "Conducts in-depth research on specific topics using web search. Use when you need detailed information that requires multiple searches."}
+
+   # ❌ Bad
+   {"name": "helper", "description": "helps with stuff"}
+   ```
+
+2. **Instruct main agent to delegate:**
+
+   ```python  theme={null}
+   agent = create_deep_agent(
+       system_prompt="""...your instructions...
+
+       IMPORTANT: For complex tasks, delegate to your subagents using the task() tool.
+       This keeps your context clean and improves results.""",
+       subagents=[...]
+   )
+   ```

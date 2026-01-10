@@ -1,0 +1,42 @@
+Create specialized subagents for different domains:
+
+```python  theme={null}
+from deepagents import create_deep_agent
+
+subagents = [
+    {
+        "name": "data-collector",
+        "description": "Gathers raw data from various sources",
+        "system_prompt": "Collect comprehensive data on the topic",
+        "tools": [web_search, api_call, database_query],
+    },
+    {
+        "name": "data-analyzer",
+        "description": "Analyzes collected data for insights",
+        "system_prompt": "Analyze data and extract key insights",
+        "tools": [statistical_analysis],
+    },
+    {
+        "name": "report-writer",
+        "description": "Writes polished reports from analysis",
+        "system_prompt": "Create professional reports from insights",
+        "tools": [format_document],
+    },
+]
+
+agent = create_deep_agent(
+    model="claude-sonnet-4-5-20250929",
+    system_prompt="You coordinate data analysis and reporting. Use subagents for specialized tasks.",
+    subagents=subagents
+)
+```
+
+**Workflow:**
+
+1. Main agent creates high-level plan
+2. Delegates data collection to data-collector
+3. Passes results to data-analyzer
+4. Sends insights to report-writer
+5. Compiles final output
+
+Each subagent works with clean context focused only on its task.

@@ -1,0 +1,20 @@
+An agent can update its own instructions based on feedback:
+
+```python  theme={null}
+agent = create_deep_agent(
+    store=InMemoryStore(),
+    backend=lambda rt: CompositeBackend(
+        default=StateBackend(rt),
+        routes={"/memories/": StoreBackend(rt)}
+    ),
+    system_prompt="""You have a file at /memories/instructions.txt with additional
+    instructions and preferences.
+
+    Read this file at the start of conversations to understand user preferences.
+
+    When users provide feedback like "please always do X" or "I prefer Y",
+    update /memories/instructions.txt using the edit_file tool."""
+)
+```
+
+Over time, the instructions file accumulates user preferences, helping the agent improve.

@@ -1,0 +1,15 @@
+<Card title="Planning and task decomposition" icon="timeline">
+  Deep agents include a built-in `write_todos` tool that enables agents to break down complex tasks into discrete steps, track progress, and adapt plans as new information emerges.
+</Card>
+
+<Card title="Context management" icon="scissors">
+  File system tools (`ls`, `read_file`, `write_file`, `edit_file`) allow agents to offload large context to memory, preventing context window overflow and enabling work with variable-length tool results.
+</Card>
+
+<Card title="Subagent spawning" icon="people-group">
+  A built-in `task` tool enables agents to spawn specialized subagents for context isolation. This keeps the main agent's context clean while still going deep on specific subtasks.
+</Card>
+
+<Card title="Long-term memory" icon="database">
+  Extend agents with persistent memory across threads using LangGraph's Store. Agents can save and retrieve information from previous conversations.
+</Card>

@@ -1,0 +1,20 @@
+The harness fixes message history when tool calls are interrupted or cancelled before receiving results.
+
+**The problem:**
+
+* Agent requests tool call: "Please run X"
+* Tool call is interrupted (user cancels, error, etc.)
+* Agent sees tool\_call in AIMessage but no corresponding ToolMessage
+* This creates an invalid message sequence
+
+**The solution:**
+
+* Detects AIMessages with tool\_calls that have no results
+* Creates synthetic ToolMessage responses indicating the call was cancelled
+* Repairs the message history before agent execution
+
+**Why it's useful:**
+
+* Prevents agent confusion from incomplete message chains
+* Gracefully handles interruptions and errors
+* Maintains conversation coherence

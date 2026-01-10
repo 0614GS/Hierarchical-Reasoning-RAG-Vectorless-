@@ -1,0 +1,28 @@
+The harness enables Anthropic's prompt caching feature to reduce redundant token processing.
+
+**How it works:**
+
+* Caches portions of the prompt that repeat across turns
+* Significantly reduces latency and cost for long system prompts
+* Automatically skips for non-Anthropic models
+
+**Why it's useful:**
+
+* System prompts (especially with filesystem docs) can be 5k+ tokens
+* These repeat every turn without caching
+* Caching provides \~10x speedup and cost reduction
+
+***
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/harness.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+
+<Tip icon="terminal" iconType="regular">
+  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+</Tip>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt

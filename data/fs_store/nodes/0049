@@ -1,0 +1,4 @@
+* Stored in a LangGraph Store (via `StoreBackend`)
+* Persists across all threads and conversations
+* Survives agent restarts
+* Accessed through paths prefixed with `/memories/`: `/memories/preferences.txt`

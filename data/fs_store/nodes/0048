@@ -1,0 +1,4 @@
+* Stored in the agent's state (via `StateBackend`)
+* Persists only within a single thread
+* Files are lost when the thread ends
+* Accessed through standard paths: `/notes.txt`, `/workspace/draft.md`

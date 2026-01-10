@@ -1,0 +1,28 @@
+Agents store information in `~/.deepagents/AGENT_NAME/memories/` as markdown files using a memory-first protocol:
+
+1. **Research**: Searches memory for relevant context before starting tasks
+2. **Response**: Checks memory when uncertain during execution
+3. **Learning**: Automatically saves new information for future sessions
+
+Organize memories by topic with descriptive filenames:
+
+```
+~/.deepagents/backend-dev/memories/
+├── api-conventions.md
+├── database-schema.md
+└── deployment-process.md
+```
+
+Teach the agent conventions once:
+
+```bash  theme={null}
+uvx deepagents-cli --agent backend-dev
+> Our API uses snake_case and includes created_at/updated_at timestamps
+```
+
+It remembers for future sessions:
+
+```bash  theme={null}
+> Create a /users endpoint
+# Applies conventions without prompting
+```

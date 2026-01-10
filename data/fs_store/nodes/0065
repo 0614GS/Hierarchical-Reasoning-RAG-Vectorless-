@@ -1,0 +1,24 @@
+> Understand the middleware that powers deep agents
+
+Deep agents are built with a modular middleware architecture. Deep agents have access to:
+
+1. A planning tool
+2. A filesystem for storing context and long-term memories
+3. The ability to spawn subagents
+
+Each feature is implemented as separate middleware. When you create a deep agent with `create_deep_agent`, we automatically attach `TodoListMiddleware`, `FilesystemMiddleware`, and `SubAgentMiddleware` to your agent.
+
+```mermaid  theme={null}
+graph LR
+    Agent[create_deep_agent] --> Todo[TodoList]
+    Agent --> FS[Filesystem]
+    Agent --> Sub[SubAgent]
+
+    Todo --> Tools[Agent Tools]
+    FS --> Tools
+    Sub --> Tools
+```
+
+Middleware is composable—you can add as many or as few middleware to an agent as needed. You can use any middleware independently.
+
+The following sections explain what each middleware provides.

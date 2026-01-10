@@ -1,0 +1,19 @@
+Maintain research state across sessions:
+
+```python  theme={null}
+research_agent = create_deep_agent(
+    store=InMemoryStore(),
+    backend=lambda rt: CompositeBackend(
+        default=StateBackend(rt),
+        routes={"/memories/": StoreBackend(rt)}
+    ),
+    system_prompt="""You are a research assistant.
+
+    Save your research progress to /memories/research/:
+    - /memories/research/sources.txt - List of sources found
+    - /memories/research/notes.txt - Key findings and notes
+    - /memories/research/report.md - Final report draft
+
+    This allows research to continue across multiple sessions."""
+)
+```

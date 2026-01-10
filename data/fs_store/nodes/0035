@@ -1,0 +1,20 @@
+The `allowed_decisions` list controls what actions a human can take when reviewing a tool call:
+
+* **`"approve"`**: Execute the tool with the original arguments as proposed by the agent
+* **`"edit"`**: Modify the tool arguments before execution
+* **`"reject"`**: Skip executing this tool call entirely
+
+You can customize which decisions are available for each tool:
+
+```python  theme={null}
+interrupt_on = {
+    # Sensitive operations: allow all options
+    "delete_file": {"allowed_decisions": ["approve", "edit", "reject"]},
+
+    # Moderate risk: approval or rejection only
+    "write_file": {"allowed_decisions": ["approve", "reject"]},
+
+    # Must approve (no rejection allowed)
+    "critical_operation": {"allowed_decisions": ["approve"]},
+}
+```

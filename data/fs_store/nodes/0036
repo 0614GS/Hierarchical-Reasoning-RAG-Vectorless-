@@ -1,0 +1,45 @@
+When an interrupt is triggered, the agent pauses execution and returns control. Check for interrupts in the result and handle them accordingly.
+
+```python  theme={null}
+import uuid
+from langgraph.types import Command
+
+# Create config with thread_id for state persistence
+config = {"configurable": {"thread_id": str(uuid.uuid4())}}
+
+# Invoke the agent
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "Delete the file temp.txt"}]
+}, config=config)
+
+# Check if execution was interrupted
+if result.get("__interrupt__"):
+    # Extract interrupt information
+    interrupts = result["__interrupt__"][0].value
+    action_requests = interrupts["action_requests"]
+    review_configs = interrupts["review_configs"]
+
+    # Create a lookup map from tool name to review config
+    config_map = {cfg["action_name"]: cfg for cfg in review_configs}
+
+    # Display the pending actions to the user
+    for action in action_requests:
+        review_config = config_map[action["name"]]
+        print(f"Tool: {action['name']}")
+        print(f"Arguments: {action['args']}")
+        print(f"Allowed decisions: {review_config['allowed_decisions']}")
+
+    # Get user decisions (one per action_request, in order)
+    decisions = [
+        {"type": "approve"}  # User approved the deletion
+    ]
+
+    # Resume execution with decisions
+    result = agent.invoke(
+        Command(resume={"decisions": decisions}),
+        config=config  # Must use the same config!
+    )
+
+# Process final result
+print(result["messages"][-1].content)
+```

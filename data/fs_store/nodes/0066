@@ -1,0 +1,20 @@
+Planning is integral to solving complex problems. If you've used Claude Code recently, you'll notice how it writes out a to-do list before tackling complex, multi-part tasks. You'll also notice how it can adapt and update this to-do list on the fly as more information comes in.
+
+`TodoListMiddleware` provides your agent with a tool specifically for updating this to-do list. Before and while it executes a multi-part task, the agent is prompted to use the `write_todos` tool to keep track of what it's doing and what still needs to be done.
+
+```python  theme={null}
+from langchain.agents import create_agent
+from langchain.agents.middleware import TodoListMiddleware
+
+# TodoListMiddleware is included by default in create_deep_agent
+# You can customize it if building a custom agent
+agent = create_agent(
+    model="claude-sonnet-4-5-20250929",
+    # Custom planning instructions can be added via middleware
+    middleware=[
+        TodoListMiddleware(
+            system_prompt="Use the write_todos tool to..."  # Optional: Custom addition to the system prompt
+        ),
+    ],
+)
+```

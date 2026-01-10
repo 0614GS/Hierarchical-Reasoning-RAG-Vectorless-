@@ -1,0 +1,26 @@
+Route parts of the namespace to different backends. Commonly used to persist `/memories/*` and keep everything else ephemeral.
+
+```python  theme={null}
+from deepagents import create_deep_agent
+from deepagents.backends import CompositeBackend, StateBackend, FilesystemBackend
+
+composite_backend = lambda rt: CompositeBackend(
+    default=StateBackend(rt),
+    routes={
+        "/memories/": FilesystemBackend(root_dir="/deepagents/myagent", virtual_mode=True),
+    },
+)
+
+agent = create_deep_agent(backend=composite_backend)
+```
+
+Behavior:
+
+* `/workspace/plan.md` → StateBackend (ephemeral)
+* `/memories/agent.md` → FilesystemBackend under `/deepagents/myagent`
+* `ls`, `glob`, `grep` aggregate results and show original path prefixes.
+
+Notes:
+
+* Longer prefixes win (for example, route `"/memories/projects/"` can override `"/memories/"`).
+* For StoreBackend routing, ensure the agent runtime provides a store (`runtime.store`).

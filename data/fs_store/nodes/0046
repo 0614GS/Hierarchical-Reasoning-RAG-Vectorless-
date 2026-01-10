@@ -1,0 +1,24 @@
+Configure long-term memory by using a `CompositeBackend` that routes the `/memories/` path to a `StoreBackend`:
+
+```python  theme={null}
+from deepagents import create_deep_agent
+from deepagents.backends import CompositeBackend, StateBackend, StoreBackend
+from langgraph.store.memory import InMemoryStore
+from langgraph.checkpoint.memory import MemorySaver
+
+checkpointer = MemorySaver()
+
+def make_backend(runtime):
+    return CompositeBackend(
+        default=StateBackend(runtime),  # Ephemeral storage
+        routes={
+            "/memories/": StoreBackend(runtime)  # Persistent storage
+        }
+    )
+
+agent = create_deep_agent(
+    store=InMemoryStore(),  # Required for StoreBackend
+    backend=make_backend,
+    checkpointer=checkpointer
+)
+```

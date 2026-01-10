@@ -1,0 +1,3 @@
+> Build agents that can plan, use subagents, and leverage file systems for complex tasks
+
+[`deepagents`](https://pypi.org/project/deepagents/) is a standalone library for building agents that can tackle complex, multi-step tasks. Built on LangGraph and inspired by applications like Claude Code, Deep Research, and Manus, deep agents come with planning capabilities, file systems for context management, and the ability to spawn subagents.

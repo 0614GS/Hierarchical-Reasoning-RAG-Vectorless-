@@ -1,0 +1,32 @@
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/oss/python/deepagents/quickstart">
+    Build your first deep agent
+  </Card>
+
+  <Card title="Customization" icon="sliders" href="/oss/python/deepagents/customization">
+    Learn about customization options
+  </Card>
+
+  <Card title="Middleware" icon="layer-group" href="/oss/python/deepagents/middleware">
+    Understand the middleware architecture
+  </Card>
+
+  <Card title="Reference" icon="arrow-up-right-from-square" href="https://reference.langchain.com/python/deepagents/">
+    See the `deepagents` API reference
+  </Card>
+</CardGroup>
+
+***
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+
+<Tip icon="terminal" iconType="regular">
+  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+</Tip>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt

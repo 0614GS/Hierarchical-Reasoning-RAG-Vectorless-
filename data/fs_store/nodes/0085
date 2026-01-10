@@ -1,0 +1,14 @@
+Subagents solve the **context bloat problem**. When agents use tools with large outputs (web search, file reads, database queries), the context window fills up quickly with intermediate results. Subagents isolate this detailed work—the main agent receives only the final result, not the dozens of tool calls that produced it.
+
+**When to use subagents:**
+
+* ✅ Multi-step tasks that would clutter the main agent's context
+* ✅ Specialized domains that need custom instructions or tools
+* ✅ Tasks requiring different model capabilities
+* ✅ When you want to keep the main agent focused on high-level coordination
+
+**When NOT to use subagents:**
+
+* ❌ Simple, single-step tasks
+* ❌ When you need to maintain intermediate context
+* ❌ When the overhead outweighs benefits

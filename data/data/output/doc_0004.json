@@ -1,0 +1,181 @@
+{
+  "doc_id": "doc_0004",
+  "doc_name": "harness",
+  "summary": "The agent harness offers a core tool calling loop with built-in capabilities for efficient agent execution, including file system access and task delegation.",
+  "keywords": [
+    "agent harness",
+    "tool calling loop",
+    "file system access",
+    "task delegation",
+    "deepagents",
+    "subagents",
+    "pluggable storage backends",
+    "conversation history summarization",
+    "human-in-the-loop"
+  ],
+  "structure": [
+    {
+      "node_id": "0023",
+      "path": "harness > Agent harness capabilities",
+      "title": "Agent harness capabilities",
+      "keywords": [
+        "deepagents",
+        "agent harness",
+        "tool calling loop",
+        "file system access",
+        "task delegation",
+        "subagents",
+        "pluggable storage backends",
+        "conversation history summarization",
+        "human-in-the-loop"
+      ],
+      "summary": "The agent harness provides a core tool calling loop with built-in tools and capabilities for file system access, task delegation, and more, enabling efficient and specialized agent execution.",
+      "nodes": [
+        {
+          "node_id": "0024",
+          "path": "harness > Agent harness capabilities > File system access",
+          "title": "File system access",
+          "keywords": [
+            "ls",
+            "read_file",
+            "write_file",
+            "edit_file",
+            "glob",
+            "grep",
+            "file system",
+            "agent harness"
+          ],
+          "summary": "The agent harness provides six tools for file system operations, including listing, reading, writing, editing, globbing, and searching files.",
+          "nodes": []
+        },
+        {
+          "node_id": "0025",
+          "path": "harness > Agent harness capabilities > Large tool result eviction",
+          "title": "Large tool result eviction",
+          "keywords": [
+            "Large tool result eviction",
+            "token threshold",
+            "context window saturation",
+            "file system",
+            "tool call results",
+            "concise reference"
+          ],
+          "summary": "The harness automatically manages large tool results by dumping them to the file system when they exceed a token threshold, ensuring efficient context management.",
+          "nodes": []
+        },
+        {
+          "node_id": "0026",
+          "path": "harness > Agent harness capabilities > Pluggable storage backends",
+          "title": "Pluggable storage backends",
+          "keywords": [
+            "Webscrape",
+            "In-memory",
+            "Persistence",
+            "VirtualMode",
+            "SecurityFeatures",
+            "StateBackend",
+            "FilesystemBackend",
+            "StoreBackend",
+            "CompositeBackend"
+          ],
+          "summary": "Describes pluggable storage backends in the agent harness, including StateBackend, FilesystemBackend, StoreBackend, and CompositeBackend, each tailored for specific use cases.",
+          "nodes": []
+        },
+        {
+          "node_id": "0027",
+          "path": "harness > Agent harness capabilities > Task delegation (subagents)",
+          "title": "Task delegation (subagents)",
+          "keywords": [
+            "subagents",
+            "task delegation",
+            "context isolation",
+            "parallel execution",
+            "specialization",
+            "task tool",
+            "stateless",
+            "customization"
+          ],
+          "summary": "Describes the harness feature enabling main agents to delegate tasks to ephemeral subagents for isolated, parallel, and specialized execution.",
+          "nodes": []
+        },
+        {
+          "node_id": "0028",
+          "path": "harness > Agent harness capabilities > Conversation history summarization",
+          "title": "Conversation history summarization",
+          "keywords": [
+            "Conversation history",
+            "Token usage",
+            "Compression",
+            "Context limits",
+            "System message"
+          ],
+          "summary": "Automatically compresses old conversation history when token usage exceeds 170,000, keeping recent messages intact.",
+          "nodes": []
+        },
+        {
+          "node_id": "0029",
+          "path": "harness > Agent harness capabilities > Dangling tool call repair",
+          "title": "Dangling tool call repair",
+          "keywords": [
+            "message history",
+            "tool call",
+            "AIMessage",
+            "ToolMessage",
+            "synthetic response",
+            "interruption",
+            "error handling",
+            "conversation coherence"
+          ],
+          "summary": "Describes how the harness repairs message history when tool calls are interrupted, ensuring coherent agent execution.",
+          "nodes": []
+        },
+        {
+          "node_id": "0030",
+          "path": "harness > Agent harness capabilities > To-do list tracking",
+          "title": "To-do list tracking",
+          "keywords": [
+            "write_todos",
+            "task list",
+            "statuses",
+            "agent state",
+            "multi-step work",
+            "long-running tasks"
+          ],
+          "summary": "The harness offers a `write_todos` tool for agents to manage a structured task list with statuses, aiding in organizing complex tasks.",
+          "nodes": []
+        },
+        {
+          "node_id": "0031",
+          "path": "harness > Agent harness capabilities > Human-in-the-Loop",
+          "title": "Human-in-the-Loop",
+          "keywords": [
+            "Human-in-the-Loop",
+            "Agent Execution",
+            "Tool Calls",
+            "Approval",
+            "Modification",
+            "Safety Gates",
+            "Interactive Debugging"
+          ],
+          "summary": "Describes how the agent execution pauses for human approval or modification at specified tool calls.",
+          "nodes": []
+        },
+        {
+          "node_id": "0032",
+          "path": "harness > Agent harness capabilities > Prompt caching (Anthropic)",
+          "title": "Prompt caching (Anthropic)",
+          "keywords": [
+            "prompt caching",
+            "Anthropic",
+            "token processing",
+            "latency reduction",
+            "cost reduction",
+            "system prompts"
+          ],
+          "summary": "Enables Anthropic's prompt caching to reduce redundant token processing, enhancing speed and reducing costs.",
+          "nodes": []
+        }
+      ]
+    }
+  ]
+}

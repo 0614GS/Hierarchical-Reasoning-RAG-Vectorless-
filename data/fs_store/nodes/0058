@@ -1,0 +1,14 @@
+Good for testing and development, but data is lost on restart:
+
+```python  theme={null}
+from langgraph.store.memory import InMemoryStore
+
+store = InMemoryStore()
+agent = create_deep_agent(
+    store=store,
+    backend=lambda rt: CompositeBackend(
+        default=StateBackend(rt),
+        routes={"/memories/": StoreBackend(rt)}
+    )
+)
+```

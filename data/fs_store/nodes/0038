@@ -1,0 +1,24 @@
+When `"edit"` is in the allowed decisions, you can modify the tool arguments before execution:
+
+```python  theme={null}
+if result.get("__interrupt__"):
+    interrupts = result["__interrupt__"][0].value
+    action_request = interrupts["action_requests"][0]
+
+    # Original args from the agent
+    print(action_request["args"])  # {"to": "everyone@company.com", ...}
+
+    # User decides to edit the recipient
+    decisions = [{
+        "type": "edit",
+        "edited_action": {
+            "name": action_request["name"],  # Must include the tool name
+            "args": {"to": "team@company.com", "subject": "...", "body": "..."}
+        }
+    }]
+
+    result = agent.invoke(
+        Command(resume={"decisions": decisions}),
+        config=config
+    )
+```

@@ -1,0 +1,30 @@
+<AccordionGroup>
+  <Accordion title="Slash commands" icon="slash">
+    Use these commands within the CLI session:
+
+    * `/tokens` - Display token usage
+    * `/clear` - Clear conversation history
+    * `/exit` or `/quit` - Exit the CLI
+  </Accordion>
+
+  <Accordion title="Bash commands" icon="terminal">
+    Execute shell commands directly by prefixing with `!`:
+
+    ```bash  theme={null}
+    !git status
+    !npm test
+    !ls -la
+    ```
+  </Accordion>
+
+  <Accordion title="Keyboard shortcuts" icon="keyboard">
+    | Shortcut                                      | Action              |
+    | --------------------------------------------- | ------------------- |
+    | `Enter`                                       | Submit              |
+    | `Option+Enter` (Mac) or `Alt+Enter` (Windows) | Newline             |
+    | `Ctrl+E`                                      | External editor     |
+    | `Ctrl+T`                                      | Toggle auto-approve |
+    | `Ctrl+C`                                      | Interrupt           |
+    | `Ctrl+D`                                      | Exit                |
+  </Accordion>
+</AccordionGroup>

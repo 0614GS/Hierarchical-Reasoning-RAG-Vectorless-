@@ -1,0 +1,55 @@
+Build a custom backend to project a remote or database filesystem (e.g., S3 or Postgres) into the tools namespace.
+
+Design guidelines:
+
+* Paths are absolute (`/x/y.txt`). Decide how to map them to your storage keys/rows.
+* Implement `ls_info` and `glob_info` efficiently (server-side listing where available, otherwise local filter).
+* Return user-readable error strings for missing files or invalid regex patterns.
+* For external persistence, set `files_update=None` in results; only in-state backends should return a `files_update` dict.
+
+S3-style outline:
+
+```python  theme={null}
+from deepagents.backends.protocol import BackendProtocol, WriteResult, EditResult
+from deepagents.backends.utils import FileInfo, GrepMatch
+
+class S3Backend(BackendProtocol):
+    def __init__(self, bucket: str, prefix: str = ""):
+        self.bucket = bucket
+        self.prefix = prefix.rstrip("/")
+
+    def _key(self, path: str) -> str:
+        return f"{self.prefix}{path}"
+
+    def ls_info(self, path: str) -> list[FileInfo]:
+        # List objects under _key(path); build FileInfo entries (path, size, modified_at)
+        ...
+
+    def read(self, file_path: str, offset: int = 0, limit: int = 2000) -> str:
+        # Fetch object; return numbered content or an error string
+        ...
+
+    def grep_raw(self, pattern: str, path: str | None = None, glob: str | None = None) -> list[GrepMatch] | str:
+        # Optionally filter server‑side; else list and scan content
+        ...
+
+    def glob_info(self, pattern: str, path: str = "/") -> list[FileInfo]:
+        # Apply glob relative to path across keys
+        ...
+
+    def write(self, file_path: str, content: str) -> WriteResult:
+        # Enforce create‑only semantics; return WriteResult(path=file_path, files_update=None)
+        ...
+
+    def edit(self, file_path: str, old_string: str, new_string: str, replace_all: bool = False) -> EditResult:
+        # Read → replace (respect uniqueness vs replace_all) → write → return occurrences
+        ...
+```
+
+Postgres-style outline:
+
+* Table `files(path text primary key, content text, created_at timestamptz, modified_at timestamptz)`
+* Map tool operations onto SQL:
+  * `ls_info` uses `WHERE path LIKE $1 || '%'`
+  * `glob_info` filter in SQL or fetch then apply glob in Python
+  * `grep_raw` can fetch candidate rows by extension or last modified time, then scan lines

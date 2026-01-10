@@ -1,0 +1,5 @@
+In addition to any user-defined subagents, deep agents have access to a `general-purpose` subagent at all times. This subagent:
+
+* Has the same system prompt as the main agent
+* Has access to all the same tools
+* Uses the same model (unless overridden)

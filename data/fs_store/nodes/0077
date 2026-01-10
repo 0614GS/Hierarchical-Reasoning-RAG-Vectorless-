@@ -1,0 +1,15 @@
+<CodeGroup>
+  ```bash pip theme={null}
+  pip install deepagents tavily-python
+  ```
+
+  ```bash uv theme={null}
+  uv init
+  uv add deepagents tavily-python
+  uv sync
+  ```
+
+  ```bash poetry theme={null}
+  poetry add deepagents tavily-python
+  ```
+</CodeGroup>

@@ -1,0 +1,7 @@
+Your deep agent automatically:
+
+1. **Planned its approach**: Used the built-in `write_todos` tool to break down the research task
+2. **Conducted research**: Called the `internet_search` tool to gather information
+3. **Managed context**: Used file system tools (`write_file`, `read_file`) to offload large search results
+4. **Spawned subagents** (if needed): Delegated complex subtasks to specialized subagents
+5. **Synthesized a report**: Compiled findings into a coherent response

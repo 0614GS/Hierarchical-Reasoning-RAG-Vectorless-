@@ -1,0 +1,8 @@
+Tell the agent what's stored where in your system prompt:
+
+```
+Your persistent memory structure:
+- /memories/preferences.txt: User preferences and settings
+- /memories/context/: Long-term context about the user
+- /memories/knowledge/: Facts and information learned over time
+```

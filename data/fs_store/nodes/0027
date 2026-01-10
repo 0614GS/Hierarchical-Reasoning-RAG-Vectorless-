@@ -1,0 +1,28 @@
+The harness allows the main agent to create ephemeral "subagents" for isolated multi-step tasks.
+
+**Why it's useful:**
+
+* **Context isolation** - Subagent's work doesn't clutter main agent's context
+* **Parallel execution** - Multiple subagents can run concurrently
+* **Specialization** - Subagents can have different tools/configurations
+* **Token efficiency** - Large subtask context is compressed into a single result
+
+**How it works:**
+
+* Main agent has a `task` tool
+* When invoked, creates a fresh agent instance with its own context
+* Subagent executes autonomously until completion
+* Returns a single final report to the main agent
+* Subagents are stateless (can't send multiple messages back)
+
+**Default subagent:**
+
+* "general-purpose" subagent automatically available
+* Has filesystem tools by default
+* Can be customized with additional tools/middleware
+
+**Custom subagents:**
+
+* Define specialized subagents with specific tools
+* Example: code-reviewer, web-researcher, test-runner
+* Configure via `subagents` parameter

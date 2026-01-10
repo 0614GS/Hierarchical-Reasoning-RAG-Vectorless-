@@ -1,0 +1,14 @@
+Build up knowledge over multiple conversations:
+
+```python  theme={null}
+# Conversation 1: Learn about a project
+agent.invoke({
+    "messages": [{"role": "user", "content": "We're building a web app with React. Save project notes."}]
+})
+
+# Conversation 2: Use that knowledge
+agent.invoke({
+    "messages": [{"role": "user", "content": "What framework are we using?"}]
+})
+# Agent reads /memories/project_notes.txt from previous conversation
+```

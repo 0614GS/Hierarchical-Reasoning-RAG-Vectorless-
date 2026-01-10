@@ -1,0 +1,10 @@
+The harness provides six tools for file system operations, making files first-class citizens in the agent's environment:
+
+| Tool         | Description                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| `ls`         | List files in a directory with metadata (size, modified time)                                 |
+| `read_file`  | Read file contents with line numbers, supports offset/limit for large files                   |
+| `write_file` | Create new files                                                                              |
+| `edit_file`  | Perform exact string replacements in files (with global replace mode)                         |
+| `glob`       | Find files matching patterns (e.g., `**/*.py`)                                                |
+| `grep`       | Search file contents with multiple output modes (files only, content with context, or counts) |

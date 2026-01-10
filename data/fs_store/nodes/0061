@@ -1,0 +1,8 @@
+Organize persistent files with clear paths:
+
+```
+/memories/user_preferences.txt
+/memories/research/topic_a/sources.txt
+/memories/research/topic_a/notes.txt
+/memories/project/requirements.md
+```

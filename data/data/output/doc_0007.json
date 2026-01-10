@@ -1,0 +1,109 @@
+{
+  "doc_id": "doc_0007",
+  "doc_name": "middleware",
+  "summary": "Introduces a modular middleware architecture for deep agents, supporting planning, filesystem operations, and subagent task delegation.",
+  "keywords": [
+    "Deep agents",
+    "Middleware",
+    "TodoListMiddleware",
+    "FilesystemMiddleware",
+    "SubAgentMiddleware",
+    "create_deep_agent",
+    "multi-part tasks",
+    "task delegation",
+    "context isolation"
+  ],
+  "structure": [
+    {
+      "node_id": "0065",
+      "path": "middleware > Deep Agents Middleware",
+      "title": "Deep Agents Middleware",
+      "keywords": [
+        "Deep agents",
+        "Middleware",
+        "TodoListMiddleware",
+        "FilesystemMiddleware",
+        "SubAgentMiddleware",
+        "create_deep_agent",
+        "multi-part tasks",
+        "task delegation",
+        "context isolation"
+      ],
+      "summary": "Introduces the modular middleware architecture for deep agents, including planning, filesystem, and subagent capabilities.",
+      "nodes": [
+        {
+          "node_id": "0066",
+          "path": "middleware > Deep Agents Middleware > To-do list middleware",
+          "title": "To-do list middleware",
+          "keywords": [
+            "TodoListMiddleware",
+            "multi-part tasks",
+            "write_todos",
+            "planning",
+            "adaptability",
+            "langchain.agents",
+            "create_agent"
+          ],
+          "summary": "Introduces the TodoListMiddleware for managing to-do lists in multi-part tasks, enhancing planning and adaptability.",
+          "nodes": []
+        },
+        {
+          "node_id": "0067",
+          "path": "middleware > Deep Agents Middleware > Filesystem middleware",
+          "title": "Filesystem middleware",
+          "keywords": [
+            "Web_search",
+            "fRAG",
+            "context_window",
+            "fFilesystemMiddleware",
+            "fls",
+            "fread_file",
+            "fwrite_file",
+            "redit_file",
+            "fCompositeBackend",
+            "fStateBackend"
+          ],
+          "summary": "Introduces FilesystemMiddleware for managing short-term and long-term memory in agents, providing tools for file operations and configuration.",
+          "nodes": [
+            {
+              "node_id": "0068",
+              "path": "middleware > Deep Agents Middleware > Filesystem middleware > Short-term vs. long-term filesystem",
+              "title": "Short-term vs. long-term filesystem",
+              "keywords": [
+                "CompositeBackend",
+                "StoreBackend",
+                "StateBackend",
+                "InMemoryStore",
+                "FilesystemMiddleware",
+                "persistent storage",
+                "threads",
+                "memories"
+              ],
+              "summary": "Describes how to configure a CompositeBackend for persistent storage of specific paths in the filesystem middleware.",
+              "nodes": []
+            }
+          ]
+        },
+        {
+          "node_id": "0069",
+          "path": "middleware > Deep Agents Middleware > Subagent middleware",
+          "title": "Subagent middleware",
+          "keywords": [
+            "subagents",
+            "middleware",
+            "task delegation",
+            "context isolation",
+            "create_agent",
+            "CompiledSubAgent",
+            "LangGraph",
+            "system_prompt",
+            "default_model",
+            "default_tools"
+          ],
+          "summary": "Describes how to use subagents middleware to delegate tasks, maintaining clean context in the main agent. Includes examples of defining and using subagents.",
+          "nodes": []
+        }
+      ]
+    }
+  ]
+}

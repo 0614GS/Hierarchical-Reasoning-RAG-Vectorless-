@@ -1,0 +1,8 @@
+The harness automatically dumps large tool results to the file system when they exceed a token threshold, preventing context window saturation.
+
+**How it works:**
+
+* Monitors tool call results for size (default threshold: 20,000 tokens)
+* When exceeded, writes the result to a file instead
+* Replaces the tool result with a concise reference to the file
+* Agent can later read the file if needed

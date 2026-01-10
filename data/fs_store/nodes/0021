@@ -1,0 +1,16 @@
+Deep agents come with a built-in system prompt inspired by Claude Code's system prompt. The default system prompt contains detailed instructions for using the built-in planning tool, file system tools, and subagents.
+
+Each deep agent tailored to a use case should include a custom system prompt specific to that use case.
+
+```python  theme={null}
+from deepagents import create_deep_agent
+
+research_instructions = """\
+You are an expert researcher. Your job is to conduct \
+thorough research, and then write a polished report. \
+"""
+
+agent = create_deep_agent(
+    system_prompt=research_instructions,
+)
+```

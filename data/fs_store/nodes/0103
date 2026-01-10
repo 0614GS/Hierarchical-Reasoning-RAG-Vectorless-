@@ -1,0 +1,24 @@
+**Problem**: Context fills up despite using subagents.
+
+**Solutions**:
+
+1. **Instruct subagent to return concise results:**
+
+   ```python  theme={null}
+   system_prompt="""...
+
+   IMPORTANT: Return only the essential summary.
+   Do NOT include raw data, intermediate search results, or detailed tool outputs.
+   Your response should be under 500 words."""
+   ```
+
+2. **Use filesystem for large data:**
+
+   ```python  theme={null}
+   system_prompt="""When you gather large amounts of data:
+   1. Save raw data to /data/raw_results.txt
+   2. Process and analyze the data
+   3. Return only the analysis summary
+
+   This keeps context clean."""
+   ```

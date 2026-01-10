@@ -1,0 +1,18 @@
+Files in `/memories/` can be accessed from any thread:
+
+```python  theme={null}
+import uuid
+
+# Thread 1: Write to long-term memory
+config1 = {"configurable": {"thread_id": str(uuid.uuid4())}}
+agent.invoke({
+    "messages": [{"role": "user", "content": "Save my preferences to /memories/preferences.txt"}]
+}, config=config1)
+
+# Thread 2: Read from long-term memory (different conversation!)
+config2 = {"configurable": {"thread_id": str(uuid.uuid4())}}
+agent.invoke({
+    "messages": [{"role": "user", "content": "What are my preferences?"}]
+}, config=config2)
+# Agent can read /memories/preferences.txt from the first thread
+```

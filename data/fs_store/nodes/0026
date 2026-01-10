@@ -1,0 +1,25 @@
+The harness abstracts file system operations behind a protocol, allowing different storage strategies for different use cases.
+
+**Available backends:**
+
+1. **StateBackend** - Ephemeral in-memory storage
+   * Files live in the agent's state (checkpointed with conversation)
+   * Persists within a thread but not across threads
+   * Useful for temporary working files
+
+2. **FilesystemBackend** - Real filesystem access
+   * Read/write from actual disk
+   * Supports virtual mode (sandboxed to a root directory)
+   * Integrates with system tools (ripgrep for grep)
+   * Security features: path validation, size limits, symlink prevention
+
+3. **StoreBackend** - Persistent cross-conversation storage
+   * Uses LangGraph's BaseStore for durability
+   * Namespaced per assistant\_id
+   * Files persist across conversations
+   * Useful for long-term memory or knowledge bases
+
+4. **CompositeBackend** - Route different paths to different backends
+   * Example: `/` → StateBackend, `/memories/` → StoreBackend
+   * Longest-prefix matching for routing
+   * Enables hybrid storage strategies

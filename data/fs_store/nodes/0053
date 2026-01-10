@@ -1,0 +1,13 @@
+Store user preferences that persist across sessions:
+
+```python  theme={null}
+agent = create_deep_agent(
+    store=InMemoryStore(),
+    backend=lambda rt: CompositeBackend(
+        default=StateBackend(rt),
+        routes={"/memories/": StoreBackend(rt)}
+    ),
+    system_prompt="""When users tell you their preferences, save them to
+    /memories/user_preferences.txt so you remember them in future conversations."""
+)
+```

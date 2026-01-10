@@ -1,0 +1,5 @@
+* Pass a backend to `create_deep_agent(backend=...)`. The filesystem middleware uses it for all tooling.
+* You can pass either:
+  * An instance implementing `BackendProtocol` (for example, `FilesystemBackend(root_dir=".")`), or
+  * A factory `BackendFactory = Callable[[ToolRuntime], BackendProtocol]` (for backends that need runtime like `StateBackend` or `StoreBackend`).
+* If omitted, the default is `lambda rt: StateBackend(rt)`.

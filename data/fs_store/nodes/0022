@@ -1,0 +1,52 @@
+Just like tool-calling agents, a deep agent gets a set of top level tools that it has access to.
+
+```python  theme={null}
+import os
+from typing import Literal
+from tavily import TavilyClient
+from deepagents import create_deep_agent
+
+tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+
+def internet_search(
+    query: str,
+    max_results: int = 5,
+    topic: Literal["general", "news", "finance"] = "general",
+    include_raw_content: bool = False,
+):
+    """Run a web search"""
+    return tavily_client.search(
+        query,
+        max_results=max_results,
+        include_raw_content=include_raw_content,
+        topic=topic,
+    )
+
+agent = create_deep_agent(
+    tools=[internet_search]
+)
+```
+
+In addition to any tools that you provide, deep agents also get access to a number of default tools:
+
+* `write_todos` – Update the agent's to-do list
+* `ls` – List all files in the agent's filesystem
+* `read_file` – Read a file from the agent's filesystem
+* `write_file` – Write a new file in the agent's filesystem
+* `edit_file` – Edit an existing file in the agent's filesystem
+* `task` – Spawn a subagent to handle a specific task
+
+***
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/customization.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+
+<Tip icon="terminal" iconType="regular">
+  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+</Tip>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt

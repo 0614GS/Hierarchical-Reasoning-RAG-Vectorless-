@@ -1,0 +1,13 @@
+The harness automatically compresses old conversation history when token usage becomes excessive.
+
+**Configuration:**
+
+* Triggers at 170,000 tokens
+* Keeps the most recent 6 messages intact
+* Older messages are summarized by the model
+
+**Why it's useful:**
+
+* Enables very long conversations without hitting context limits
+* Preserves recent context while compressing ancient history
+* Transparent to the agent (appears as a special system message)

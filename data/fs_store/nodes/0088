@@ -1,0 +1,7 @@
+For complex workflows, use a pre-built LangGraph graph:
+
+**Fields:**
+
+* **name** (`str`): Unique identifier
+* **description** (`str`): What this subagent does
+* **runnable** (`Runnable`): A compiled LangGraph graph (must call `.compile()` first)

@@ -1,0 +1,57 @@
+<Steps>
+  <Step title="Set your API key" icon="key">
+    Export as an environment variable:
+
+    ```bash  theme={null}
+    export ANTHROPIC_API_KEY="your-api-key"
+    ```
+
+    Or create a `.env` file in your project root:
+
+    ```bash  theme={null}
+    ANTHROPIC_API_KEY=your-api-key
+    ```
+  </Step>
+
+  <Step title="Run the CLI" icon="terminal">
+    ```bash  theme={null}
+    uvx deepagents-cli
+    ```
+  </Step>
+
+  <Step title="Give the agent a task" icon="message">
+    ```txt  theme={null}
+    > Create a Python script that prints "Hello, World!"
+    ```
+
+    The agent proposes changes with diffs for your approval before modifying files.
+  </Step>
+</Steps>
+
+<Accordion title="Additional installation and configuration options">
+  Install locally if needed:
+
+  <CodeGroup>
+    ```bash pip theme={null}
+    pip install deepagents-cli
+    ```
+
+    ```bash uv theme={null}
+    uv add deepagents-cli
+    ```
+  </CodeGroup>
+
+  The CLI uses Anthropic Claude Sonnet 4 by default. To use OpenAI:
+
+  ```bash  theme={null}
+  export OPENAI_API_KEY="your-key"
+  ```
+
+  Enable web search (optional):
+
+  ```bash  theme={null}
+  export TAVILY_API_KEY="your-key"
+  ```
+
+  API keys can be set as environment variables or in a `.env` file.
+</Accordion>

@@ -1,0 +1,1 @@
+When using `CompositeBackend`, deep agents maintain **two separate filesystems**:

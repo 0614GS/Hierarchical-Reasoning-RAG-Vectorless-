@@ -1,0 +1,19 @@
+```python  theme={null}
+from deepagents.backends import FilesystemBackend
+
+agent = create_deep_agent(
+    backend=FilesystemBackend(root_dir=".", virtual_mode=True)
+)
+```
+
+**How it works:**
+
+* Reads/writes real files under a configurable `root_dir`.
+* You can optionally set `virtual_mode=True` to sandbox and normalize paths under `root_dir`.
+* Uses secure path resolution, prevents unsafe symlink traversal when possible, can use ripgrep for fast `grep`.
+
+**Best for:**
+
+* Local projects on your machine
+* CI sandboxes
+* Mounted persistent volumes

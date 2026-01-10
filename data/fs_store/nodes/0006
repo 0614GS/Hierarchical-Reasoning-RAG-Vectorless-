@@ -1,0 +1,18 @@
+```python  theme={null}
+from langgraph.store.memory import InMemoryStore
+from deepagents.backends import StoreBackend
+
+agent = create_deep_agent(
+    backend=(lambda rt: StoreBackend(rt)),   # Note that the tools access Store through the runtime.store
+    store=InMemoryStore()
+)
+```
+
+**How it works:**
+
+* Stores files in a LangGraph `BaseStore` provided by the runtime, enabling cross‑thread durable storage.
+
+**Best for:**
+
+* When you already run with a configured LangGraph store (for example, Redis, Postgres, or cloud implementations behind `BaseStore`).
+* When you're deploying your agent through LangSmith Deployment (a store is automatically provisioned for your agent).

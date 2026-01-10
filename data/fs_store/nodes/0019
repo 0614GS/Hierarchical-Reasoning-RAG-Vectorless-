@@ -1,0 +1,22 @@
+> Learn how to customize deep agents with system prompts, tools, subagents, and more
+
+```mermaid  theme={null}
+graph LR
+    Create[create_deep_agent] --> Core[Core Config]
+    Create --> Features[Features]
+
+    Core --> Model[Model]
+    Core --> Prompt[System Prompt]
+    Core --> Tools[Tools]
+
+    Features --> Backend[Backend]
+    Features --> Sub[Subagents]
+    Features --> Interrupt[Interrupts]
+
+    Model --> Agent[Customized Agent]
+    Prompt --> Agent
+    Tools --> Agent
+    Backend --> Agent
+    Sub --> Agent
+    Interrupt --> Agent
+```

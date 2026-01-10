@@ -1,0 +1,28 @@
+```python  theme={null}
+from deepagents import create_deep_agent
+from deepagents.backends import CompositeBackend, StateBackend, StoreBackend
+from langgraph.store.memory import InMemoryStore
+
+composite_backend = lambda rt: CompositeBackend(
+    default=StateBackend(rt),
+    routes={
+        "/memories/": StoreBackend(rt),
+    }
+)
+
+agent = create_deep_agent(
+    backend=composite_backend,
+    store=InMemoryStore()  # Store passed to create_deep_agent, not backend
+)
+```
+
+**How it works:**
+
+* Routes file operations to different backends based on path prefix.
+* Preserves the original path prefixes in listings and search results.
+
+**Best for:**
+
+* When you want to give your agent both ephemeral and cross-thread storage, a CompositeBackend allows you provide both a StateBackend and StoreBackend
+* When you have multiple sources of information that you want to provide to your agent as part of a single filesystem.
+  * e.g. You have long-term memories stored under /memories/ in one Store and you also have a custom backend that has documentation accessible at /docs/.

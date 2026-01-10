@@ -1,0 +1,13 @@
+The harness pauses agent execution at specified tool calls to allow human approval/modification.
+
+**Configuration:**
+
+* Map tool names to interrupt configurations
+* Example: `{"edit_file": True}` - pause before every edit
+* Can provide approval messages or modify tool inputs
+
+**Why it's useful:**
+
+* Safety gates for destructive operations
+* User verification before expensive API calls
+* Interactive debugging and guidance

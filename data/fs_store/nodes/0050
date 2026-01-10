@@ -1,0 +1,17 @@
+The `CompositeBackend` routes file operations based on path prefixes:
+
+* Files with paths starting with `/memories/` are stored in the Store (persistent)
+* Files without this prefix remain in transient state
+* All filesystem tools (`ls`, `read_file`, `write_file`, `edit_file`) work with both
+
+```python  theme={null}
+# Transient file (lost after thread ends)
+agent.invoke({
+    "messages": [{"role": "user", "content": "Write draft to /draft.txt"}]
+})
+
+# Persistent file (survives across threads)
+agent.invoke({
+    "messages": [{"role": "user", "content": "Save final report to /memories/report.txt"}]
+})
+```

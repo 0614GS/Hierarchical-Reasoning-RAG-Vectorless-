@@ -1,0 +1,38 @@
+Backends must implement the `BackendProtocol`.
+
+Required endpoints:
+
+* `ls_info(path: str) -> list[FileInfo]`
+  * Return entries with at least `path`. Include `is_dir`, `size`, `modified_at` when available. Sort by `path` for deterministic output.
+* `read(file_path: str, offset: int = 0, limit: int = 2000) -> str`
+  * Return numbered content. On missing file, return `"Error: File '/x' not found"`.
+* `grep_raw(pattern: str, path: Optional[str] = None, glob: Optional[str] = None) -> list[GrepMatch] | str`
+  * Return structured matches. For an invalid regex, return a string like `"Invalid regex pattern: ..."` (do not raise).
+* `glob_info(pattern: str, path: str = "/") -> list[FileInfo]`
+  * Return matched files as `FileInfo` entries (empty list if none).
+* `write(file_path: str, content: str) -> WriteResult`
+  * Create-only. On conflict, return `WriteResult(error=...)`. On success, set `path` and for state backends set `files_update={...}`; external backends should use `files_update=None`.
+* `edit(file_path: str, old_string: str, new_string: str, replace_all: bool = False) -> EditResult`
+  * Enforce uniqueness of `old_string` unless `replace_all=True`. If not found, return error. Include `occurrences` on success.
+
+Supporting types:
+
+* `WriteResult(error, path, files_update)`
+* `EditResult(error, path, files_update, occurrences)`
+* `FileInfo` with fields: `path` (required), optionally `is_dir`, `size`, `modified_at`.
+* `GrepMatch` with fields: `path`, `line`, `text`.
+
+***
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/backends.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+
+<Tip icon="terminal" iconType="regular">
+  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+</Tip>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt

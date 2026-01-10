@@ -1,0 +1,4 @@
+```bash  theme={null}
+export ANTHROPIC_API_KEY="your-api-key"
+export TAVILY_API_KEY="your-tavily-api-key"
+```

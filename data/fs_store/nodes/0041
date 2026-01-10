@@ -1,0 +1,12 @@
+Human-in-the-loop requires a checkpointer to persist agent state between the interrupt and resume:
+
+```python  theme={null}
+from langgraph.checkpoint.memory import MemorySaver
+
+checkpointer = MemorySaver()
+agent = create_deep_agent(
+    tools=[...],
+    interrupt_on={...},
+    checkpointer=checkpointer  # Required for HITL
+)
+```

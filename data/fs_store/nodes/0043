@@ -1,0 +1,18 @@
+The decisions list must match the order of `action_requests`:
+
+```python  theme={null}
+if result.get("__interrupt__"):
+    interrupts = result["__interrupt__"][0].value
+    action_requests = interrupts["action_requests"]
+
+    # Create one decision per action, in order
+    decisions = []
+    for action in action_requests:
+        decision = get_user_decision(action)  # Your logic
+        decisions.append(decision)
+
+    result = agent.invoke(
+        Command(resume={"decisions": decisions}),
+        config=config
+    )
+```
