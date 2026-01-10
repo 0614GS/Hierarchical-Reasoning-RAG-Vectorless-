@@ -33,7 +33,6 @@
 ```text
 ├── data/
 │   ├── input/              # 原始 Markdown 文档
-│   ├── node_content_store/ # 原子正文存储 (node_id -> text)
 │   ├── tree_results/       # 文档导航树索引 (doc_id.json)
 │   ├── fs_store/ 
 │   │   ├── docs # 存储文档树 (doc_id -> tree)
