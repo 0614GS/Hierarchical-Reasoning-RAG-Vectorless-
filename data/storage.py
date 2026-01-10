@@ -1,10 +1,24 @@
 import json
+import os
 
 from langchain_classic.storage import LocalFileStore, EncoderBackedStore
 
-# 初始化本地文件仓库
-node_fs = LocalFileStore("../data/fs_store/nodes")
-doc_tree_fs = LocalFileStore("../data/fs_store/docs")
+# 获取当前文件 (storage.py) 的绝对路径
+current_file_path = os.path.abspath(__file__)
+
+# 获取 storage.py 所在的目录 (core/)
+current_dir = os.path.dirname(current_file_path)
+
+# 获取项目根目录 (vectorless-RAG/)
+project_root = os.path.dirname(current_dir)
+
+# 拼接出准确的 data 路径
+nodes_path = os.path.join(project_root, "data", "fs_store", "nodes")
+docs_path = os.path.join(project_root, "data", "fs_store", "docs")
+
+# 初始化存储器
+node_fs = LocalFileStore(nodes_path)
+doc_tree_fs = LocalFileStore(docs_path)
 
 # 封装成支持字符串存取的 Store，用于存放(node_id, content)
 node_content_store = EncoderBackedStore(
