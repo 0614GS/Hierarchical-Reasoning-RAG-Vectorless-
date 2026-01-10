@@ -1,6 +1,7 @@
 # 🚀 Hierarchical Reasoning RAG (Vectorless)
 
-> 一个基于文档层级结构（Hierarchical Tree）和 LLM 推理的检索增强生成系统。告别传统 Embedding 的“语义模糊”问题，实现极其精准的工业级文档检索。
+> 一个基于文档层级结构（Hierarchical Tree）和 LLM 推理的检索增强生成系统。告别传统 Embedding 的“语义模糊”问题，实现极其精准的工业级文档检索。  
+> 本项目在构建文档导航树的时候参考了[pageIndex](https://github.com/VectifyAI/PageIndex)
 
 ---
 
@@ -68,6 +69,7 @@ python md2tree.py
 ``` 
 ## 📊 数据 Schema 展示
 ### 节点索引 (Node Metadata)
+节点包含keywords，这对于信息密集的技术文档至关重要  
 每个节点在构建时都会参考子节点信息：
 ``` json
 {
