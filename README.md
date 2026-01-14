@@ -1,136 +1,189 @@
-# 🚀 Hierarchical Reasoning RAG (Vectorless)
+# 🚀 Vectorless RAG：层级推理检索增强生成系统
 
-> 一个基于文档层级结构（Hierarchical Tree）和 LLM 推理的检索增强生成系统。告别传统 Embedding 的“语义模糊”问题，实现极其精准的工业级文档检索。  
-> 本项目在构建文档导航树的时候参考了[pageIndex](https://github.com/VectifyAI/PageIndex)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 
----
+一个基于文档层级结构和大型语言模型（LLM）推理的检索增强生成（RAG）系统，摒弃传统向量嵌入，告别语义模糊，实现工业级文档检索精度。
 
-## 💡 核心设计哲学 (The Core Philosophy)
+## 💡 核心设计哲学
 
-本项目摒弃了传统的“切片 -> 向量化 -> 相似度匹配”流程，采用 **Tree-based Reasoning** 路径：
+本项目摒弃了传统的"切片 → 向量化 → 相似度匹配"流程，采用 **树状推理** 路径：
 
-* **Structure-Aware Indexing**: 自动解析 Markdown 的 H1-H6 层级，保留文档的血统和逻辑关联。
-* **Bottom-Up Synthesis**: 节点摘要自底向上汇聚。子节点的关键词支撑父节点，父节点的摘要浓缩子节点，形成“全方位、多维度”的导航树。
-* **Global-to-Local Routing**: 
-    1. 通过 `global_index.json` 确定文档范围。
-    2. 通过精简的 `doc_nav_tree` 导航到具体的 `node_id`。
-    3. 从 `node_content_store` 提取原子级正文。
+* **结构感知索引**：自动解析 Markdown H1-H6 层级，保留文档血统和逻辑关联。
+* **自底向上合成**：节点摘要从底部向上汇聚。子节点关键词支撑父节点，父节点摘要浓缩子节点，形成全方位、多维度的导航树。
+* **全局到局部路由**：
+  1. 通过 `global_index.json` 确定文档范围。
+  2. 通过精简的 `doc_nav_tree` 导航到具体的 `node_id`。
+  3. 从 `node_content_store` 提取原子级正文。
+* **智能对话 Agent**：基于 LangChain Agent 框架，整合本地文档检索工具（search_local_docs）和外部 MCP 客户端工具，实现多工具协作的对话系统。Agent 能够理解用户查询，自动调用检索工作流获取相关文档片段，并结合其他工具生成准确回答。
 
----
+## 🛠️ 技术特性
 
-## 🛠️ 技术特性 (Key Features)
+- ✅ **Markdown 结构化解析**：自动构建树状结构，支持代码块过滤，防止内容干扰。
+- ✅ **双层索引机制**：
+  - **全局索引**：跨文档导航，快速定位相关文件。
+  - **本地导航树**：文档内导航，LLM 像读目录一样精准定位章节。
+- ✅ **原子级存储**：导航树与正文内容解耦，索引极其轻量（Token 消耗降低 80%）。
+- ✅ **Pydantic 强制 Schema**：所有 LLM 输出均经过格式验证，确保 Summary 与 Keywords 的稳定性。
+- ✅ **高性能并发处理**：采用异步 IO (`asyncio.gather`) 实现多文档、多节点的并行索引构建。
+- ✅ **对话 Agent**：集成检索工具，支持自然语言对话，结合本地文档检索和外部 MCP 工具。
 
-- [x] **Markdown 结构化解析**: 自动构建 Tree 结构，支持代码块过滤，防止内容干扰。
-- [x] **双层索引机制**:
-    - **Global Index**: 跨文档导航，快速定位相关文件。
-    - **Local Nav Tree**: 文档内导航，LLM 像读目录一样精准定位章节。
-- [x] **原子级存储 (Content Store)**: 导航树与正文内容解耦，索引极其轻量（Token 消耗降低 80%）。
-- [x] **Pydantic 强制 Schema**: 所有 LLM 输出均经过格式验证，确保 Summary 与 Keywords 的稳定性。
-- [x] **高性能并发处理**: 采用异步 IO (`asyncio.gather`) 实现多文档、多节点的并行索引构建。
+## 📋 系统要求
 
----
+- Python 3.10+
+- 依赖包见 `requirements.txt`
 
-## 📂 项目结构 (Project Structure)
-```text
-├── data/
-│   ├── input/              # 原始 Markdown 文档
-│   ├── tree_results/       # 文档导航树索引 (doc_id.json)
-│   ├── fs_store/ 
-│   │   ├── docs # 存储文档树 (doc_id -> tree)
-│   │   └── nodes # 原子正文存储 (node_id -> text)
-│   ├── storage.py          # 基于 Key-Value 的存储实现
-│   └── output/       # 文档导航树索引 (doc_id.json)
-├── core/
-│   ├── md2tree.py          # 核心: Markdown 解析与树构建逻辑
-│   ├── workflow/            # LangGraph 节点处理逻辑
-│   └── reasoning_retriever.py # 检索器
-├── global_index.json       # 全局顶级索引 (doc_id, summary, keywords)
-└── README.md
+## 🚀 快速开始
+
+### 1. 环境设置
+
+```bash
+# 创建虚拟环境
+python -m venv venv
+
+# 激活环境
+# Windows
+venv\Scripts\activate
+# Unix/MacOS
+source venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
 ```
-## 🚀 快速开始 (Getting Started)
-### 1. 建立文档索引
-将要构建索引的md文档放入 /input 文件夹，运行以下命令，系统将自动扫描文档，生成全局 ID，并构建多层级摘要：
-``` python
-python md2tree.py
+
+### 2. 构建文档索引
+
+将要构建索引的 Markdown 文档放入 `/data/input` 文件夹，然后运行：
+
+```bash
+python data/md2tree.py
 ```
-### 2. 使用检索器retriever
+
+系统将自动扫描文档，生成全局 ID，并构建多层级摘要。
+
+### 3. 使用检索器
+
 ```python
 # 输入：str = query
-# 输出：list = [content_1, content_2, ...]
-```
-### 3. 检索器逻辑
-``` python
+# 输出：list = [node_1, node_2, ...]
+
+# 检索器逻辑：
 # 1. 加载全局索引
 # 2. LLM 决策目标文档 (Doc Routing)
 # 3. 加载目标文档的轻量级 Tree
 # 4. LLM 决策目标节点 (Node Routing)
 # 5. LLM 评价节点内容 (Node Grading)
 # 6. 返回相关节点的内容
-``` 
-## 📊 数据 Schema 展示
+```
+
+### 4. 使用对话 Agent
+
+Agent 整合了本地文档检索和外部工具，支持对话式查询：
+
+```python
+from core.agent import agent
+
+# Agent 已预构建，包含本地检索工具和 MCP 客户端工具
+response = agent.invoke("如何使用长期记忆？")
+print(response)
+```
+
+## 📂 项目结构
+
+```
+├── data/
+│   ├── input/              # 原始 Markdown 文档
+│   ├── output/             # 文档导航树索引 (doc_id.json)
+│   ├── fs_store/
+│   │   ├── docs/           # 文档树存储 (doc_id -> tree)
+│   │   └── nodes/          # 原子正文存储 (node_id -> text)
+│   └── storage.py          # 基于 Key-Value 的存储实现
+├── core/
+│   ├── agent.py            # 主 Agent 逻辑，整合工具
+│   ├── workflow/           # LangGraph 节点处理逻辑
+│   │   ├── graph.py        # 检索工作流图
+│   │   ├── nodes.py        # 工作流节点实现
+│   │   ├── states.py       # 工作流状态定义
+│   │   └── prompts.py      # 提示词模板
+│   ├── models/             # 数据模型和模式
+│   ├── tools/              # 工具模块，包括检索器
+│   │   └── local_retriever.py # 本地检索工具
+│   └── mcp_clients/        # MCP 客户端实现
+├── global_index.json       # 全局顶级索引 (doc_id, summary, keywords)
+├── requirements.txt        # Python 依赖
+├── AGENTS.md               # 开发指南和流程
+└── README.md               # 本文件
+```
+
+## 🔄 工作流程
+
+### 索引构建流程
+
+基于 `md2tree.py`，索引构建采用以下步骤：
+
+1. **文档解析**：读取 Markdown 文件，使用正则表达式提取 H1-H6 标题及其内容，构建扁平节点列表，支持代码块过滤。
+2. **树状结构构建**：使用栈算法将扁平节点转换为嵌套树结构，保留层级关系。
+3. **元数据生成**：递归遍历树，自底向上使用 LLM 生成每个节点的摘要（summary）和关键词（keywords）。子节点信息用于增强父节点元数据，并发处理多个节点以提高效率。
+4. **全局索引生成**：为每个文档生成全局摘要和关键词，创建文档级索引（doc_id, summary, keywords）。
+5. **存储保存**：将导航树和原子级内容分别存储在 `doc_tree_store` 和 `node_content_store` 中。
+
+### Agent 回复生成原理
+
+Agent 基于 LangChain 的 `create_agent` 框架，实现多工具协作：
+
+- **工具集成**：整合本地检索工具 `search_local_docs`（调用 LangGraph 工作流进行文档检索）和外部 MCP 客户端工具（支持在线文档查询）。
+- **推理过程**：接收用户查询，Agent 使用 LLM 推理决定调用哪些工具。本地工具查询索引后的文档片段，MCP 工具查询在线资源。
+- **回复合成**：结合工具返回的结果，LLM 生成连贯的自然语言回答，实现本地和在线文档的无缝融合。
+
 ### 节点索引 (Node Metadata)
-节点包含keywords，这对于信息密集的技术文档至关重要  
-每个节点在构建时都会参考子节点信息：
-``` json
+每个节点包含关键词，对信息密集的技术文档至关重要。节点在构建时会参考子节点信息：
+
+```json
 {
-"node_id": "0006",
-"path": "backends > Backends > Built-in backends > StoreBackend (LangGraph Store)",
-"title": "StoreBackend (LangGraph Store)",
-"keywords": ["StoreBackend", "LangGraph Store", "InMemoryStore", "BaseStore", "deep agents", "cross-thread storage"],
-"summary": "Describes the configuration and usage of StoreBackend with LangGraph Store for durable cross-thread storage in deep agents.",
-"nodes": []
+  "node_id": "0006",
+  "path": "backends > Backends > Built-in backends > StoreBackend (LangGraph Store)",
+  "title": "StoreBackend (LangGraph Store)",
+  "keywords": ["StoreBackend", "LangGraph Store", "InMemoryStore", "BaseStore", "deep agents", "cross-thread storage"],
+  "summary": "Describes the configuration and usage of StoreBackend with LangGraph Store for durable cross-thread storage in deep agents.",
+  "nodes": []
 }
 ```
+
 ### 文档树（Doc Tree）
-每个文档有自己的doc_id，它的树是一个导航目录供LLM阅读
+每个文档有自己的 doc_id，它的树作为一个导航目录供 LLM 阅读：
+
 ```json
 {
   "doc_id": "doc_0001",
   "doc_name": "backends",
   "summary": "Configure and route filesystem backends for deep agents with policy enforcement, including built-in and custom options.",
-  "keywords": [
-    "filesystem backends",
-    "deep agent",
-    "CompositeBackend",
-    "BackendProtocol",
-    "policy hooks",
-    "virtual filesystem"
-  ],
+  "keywords": ["filesystem backends", "deep agent", "CompositeBackend", "BackendProtocol", "policy hooks", "virtual filesystem"],
   "structure": [{"node_1": "node"}, {"node_2": "node"}]
 }
 ```
-### 顶级目录
-每个文件的metadata（doc_id, summary, keywords）列表
+
+### 全局索引
+每个文件的元数据列表 (doc_id, summary, keywords)：
+
 ```json
 [
   {
     "doc_id": "doc_0001",
     "doc_name": "backends",
-    "keywords": [
-      "filesystem backends",
-      "deep agent",
-      "CompositeBackend",
-      "BackendProtocol",
-      "policy hooks",
-      "virtual filesystem"
-    ],
+    "keywords": ["filesystem backends", "deep agent", "CompositeBackend", "BackendProtocol", "policy hooks", "virtual filesystem"],
     "summary": "Configure and route filesystem backends for deep agents with policy enforcement, including built-in and custom options."
-  },
-  {
-    "doc_id": "doc_0002",
-    "doc_name": "cli",
-    "keywords": [
-      "Deep Agents CLI",
-      "persistent memory",
-      "file operations",
-      "shell commands",
-      "web search",
-      "HTTP requests",
-      "task planning",
-      "memory storage",
-      "human approval"
-    ],
-    "summary": "Deep Agents CLI is an interactive terminal for building agents with persistent memory, supporting various operations like file handling, shell commands, web search, and more."
   }
 ]
 ```
+
+## 🤝 贡献
+
+欢迎贡献！请随时提交 Pull Request。
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+
+## 🙏 致谢
+
+本项目参考了 [pageIndex](https://github.com/VectifyAI/PageIndex) 进行文档导航树构建。
